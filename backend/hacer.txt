@@ -1,0 +1,55 @@
+Quiero que me generes únicamente la estructura de un backend en Nest.js usando la arquitectura Screaming Architecture con base de datos Prisma, sin escribir código, solo la estructura de carpetas y archivos.
+
+Requisitos:
+- El proyecto debe seguir Nest.js con TypeScript.
+- Eliminar todos los archivos y carpetas innecesarios que Nest genera por defecto (como test e interfaces vacías).
+- Crear las carpetas según la arquitectura Screaming Architecture:
+  1. **domain/** → Entidades, interfaces y contratos de repositorios (sin implementación).
+     - domain/entities/
+       - user.entity.ts
+       - entry.entity.ts
+     - domain/repositories/
+       - user.repository.ts
+       - entry.repository.ts
+  2. **application/** → Casos de uso, uno por archivo.
+     - application/auth/
+       - register-user.usecase.ts
+       - login-user.usecase.ts
+       - get-profile.usecase.ts
+     - application/entries/
+       - create-entry.usecase.ts
+       - update-entry.usecase.ts
+       - delete-entry.usecase.ts
+       - list-entries-by-user.usecase.ts
+  3. **infrastructure/** → Implementaciones técnicas (Prisma, JWT, bcrypt, etc.).
+     - infrastructure/database/
+       - prisma.service.ts
+       - prisma.module.ts
+     - infrastructure/repositories/
+       - prisma-user.repository.ts
+       - prisma-entry.repository.ts
+     - infrastructure/security/
+       - jwt.strategy.ts
+       - jwt.guard.ts
+  4. **interfaces/** → Controladores, DTOs y validaciones.
+     - interfaces/http/auth/
+       - auth.controller.ts
+       - dto/
+         - login.dto.ts
+         - register.dto.ts
+     - interfaces/http/entries/
+       - entries.controller.ts
+       - dto/
+         - create-entry.dto.ts
+         - update-entry.dto.ts
+  5. **config/** → Variables de entorno y configuración.
+     - config/configuration.ts
+     - config/validation.ts
+
+- El archivo `main.ts` debe quedar limpio y listo para usar.
+- Debe existir `app.module.ts` importando únicamente los módulos necesarios.
+- Incluir el archivo `prisma/schema.prisma` en la raíz para la definición de User y Entry (solo nombre del archivo, sin contenido).
+- No escribir el contenido de los archivos, solo indicar su nombre y ubicación.
+- Mostrar el resultado final como un árbol de carpetas con sangría.
+
+Entrega únicamente la estructura final en formato de árbol (tree), sin explicaciones adicionales.
