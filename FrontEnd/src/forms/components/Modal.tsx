@@ -9,7 +9,14 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ modal, hideModal }) => {
   return (
     <>
-      <div className={`modal-backdrop ${modal.isVisible ? 'visible' : ''}`} onClick={hideModal}></div>
+      <div
+        className={`modal-backdrop ${modal.isVisible ? 'visible' : ''}`}
+        onClick={hideModal}
+        style={{
+          backdropFilter: 'blur(2px)',
+          WebkitBackdropFilter: 'blur(8px)', // Para compatibilidad con Safari
+        }}
+      ></div>
       <div className={`custom-modal ${modal.isVisible ? 'visible' : ''}`}>
         <div className="relative">
           <button

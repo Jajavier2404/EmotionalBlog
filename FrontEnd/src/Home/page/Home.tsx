@@ -1,10 +1,22 @@
-import SideBar from "../Components/SideBar"
-export default function Home() {
+import React, { useState } from "react";
+import "../styles/home.css";
+import {Header, Footer , Hero, CallToAction, Features} from "../components/index";
+
+
+const LandingPage: React.FC = () => {
+  const [menuActive, setMenuActive] = useState(false);
+  const openMenu = () => setMenuActive(true);
+  const closeMenu = () => setMenuActive(false);
+
   return (
-    <div className="home">
-        <SideBar />
-      <h1>Welcome to EmotionalBlog</h1>
-      <p>Your space to share and explore emotions through blogging.</p>
-    </div>
-  )
-}
+    <main>
+      <Header menuActive={menuActive} openMenu={openMenu} closeMenu={closeMenu} />
+      <Hero />
+      <Features />
+      <CallToAction />
+      <Footer />
+    </main>
+  );
+};
+
+export default LandingPage;
