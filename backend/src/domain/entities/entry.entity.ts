@@ -1,3 +1,13 @@
+/*
+ * /-/-/ Entry Entity /-/-/
+ * 
+ * Este archivo define la entidad Entry, que representa una entrada de 
+ * blogs en el dominio de la aplicación. 
+ * 
+ * Su funcion es facilitar la creación, actualización y eliminación 
+ * de entradas de blog.
+ */
+
 export class Entry {
   constructor(
     public readonly id:string,
