@@ -9,7 +9,7 @@ import { Entry } from "../../domain/entities/entry.entity";
 @Injectable()
 export class CreateEntryUseCase {
   constructor(
-    @Inject('EntryRepository') // Asegúrate de que el token coincida con el proporcionado en tu módulo
+    @Inject('EntryRepository') 
     private readonly entryRepository: EntryRepository) {}
 
   async execute(emocion: string, texto: string, userId: string): Promise<Entry> {

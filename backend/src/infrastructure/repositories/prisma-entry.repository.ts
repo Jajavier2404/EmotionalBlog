@@ -29,8 +29,21 @@ export class PrismaEntryRepository implements EntryRepository {
             nuevaEntrada.userId,
         )
     }  
-    async findByUserId(usuarioId: string): Promise<Entry[]> {
-        throw new Error("Method not implemented.");
+    async findByUserId(userId: string): Promise<Entry[]> {
+        const entradas = await this.prisma.entry.findMany({
+            where: { userId },
+            orderBy: { createdAt: 'desc' },
+            });
+        return entradas.map(entrada => new Entry(
+            entrada.id,
+            entrada.fecha,
+            entrada.emocion,
+            entrada.texto,
+            entrada.createdAt,
+            entrada.updatedAt,
+            entrada.userId,
+        ));
+        
     }
     async findById(id: string): Promise<Entry | null> {
         throw new Error("Method not implemented.");
