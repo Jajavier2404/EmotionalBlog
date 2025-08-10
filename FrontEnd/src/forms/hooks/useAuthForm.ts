@@ -45,6 +45,10 @@ const useAuthForm = () => {
 
     setIsSubmitting(true);
     try {
+      console.log("Datos enviados al endpoint", {
+        email: forgotPasswordEmail,
+      });
+
       await forgotPassword(forgotPasswordEmail);
       showModal(
         "Se ha enviado un enlace de recuperación a tu correo electrónico",
@@ -67,15 +71,24 @@ const useAuthForm = () => {
   };
 
   const handleRegister = async () => {
-    if (!registerData.username || !registerData.email || !registerData.password) {
+    if (
+      !registerData.username ||
+      !registerData.email ||
+      !registerData.password
+    ) {
       showModal("Todos los campos son obligatorios", false);
       return;
     }
 
+    console.log("📤 Datos enviados al endpoint /register:", registerData);
+
     setIsSubmitting(true);
     try {
-      console.log("Calling registerUser with data:", registerData);
-      await registerUser(registerData);
+      await registerUser({
+        username: registerData.username,
+        email: registerData.email,
+        password: registerData.password,
+      });
       showModal("Registro exitoso. ¡Ahora inicia sesión!", true);
       setTimeout(() => {
         setIsRightPanelActive(false);
@@ -98,6 +111,8 @@ const useAuthForm = () => {
       showModal("Todos los campos son obligatorios", false);
       return;
     }
+
+    console.log("Datos endpoint", loginData);
 
     setIsSubmitting(true);
     try {
