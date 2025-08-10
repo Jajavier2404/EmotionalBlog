@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useResetPassword } from "../hooks/useResetPassword";
 import "../styles/ForgotPassword.css";
 
@@ -18,6 +18,25 @@ const ForgotPassword: React.FC = () => {
     closeModal,
   } = useResetPassword();
 
+  // Estados para mostrar/ocultar contraseñas
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // Función para prevenir copy/paste
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    // Prevenir Ctrl+C, Ctrl+A, Ctrl+X, Ctrl+V
+    if (e.ctrlKey && ['c', 'a', 'x', 'v'].includes(e.key.toLowerCase())) {
+      e.preventDefault();
+    }
+  };
+
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevenir menú contextual (click derecho)
+  };
+
+  // Verificar si las contraseñas coinciden
+  const passwordsMatch = confirmPassword && newPassword === confirmPassword;
+  
   return (
     <div className="reset-password-app">
       {/* Home Button */}
@@ -59,16 +78,27 @@ const ForgotPassword: React.FC = () => {
           <div className="form-group">
             <div className="input-wrapper">
               <input
-                type="password"
+                type={showNewPassword ? "text" : "password"}
                 className={`auth-input ${error && newPassword ? "error" : ""}`}
                 placeholder="Nueva contraseña"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
+                onKeyDown={handleKeyDown}
+                onContextMenu={handleContextMenu}
                 disabled={loading}
                 autoComplete="new-password"
               />
               <i className="fas fa-lock input-icon"></i>
+              <button
+                type="button"
+                className="password-toggle-btn"
+                onClick={() => setShowNewPassword(!showNewPassword)}
+                disabled={loading}
+              >
+                <i className={showNewPassword ? "fas fa-eye-slash" : "fas fa-eye"}></i>
+              </button>
             </div>
+
             {newPassword && (
               <div className="password-strength">
                 <div className="strength-bar-container">
@@ -110,36 +140,63 @@ const ForgotPassword: React.FC = () => {
           <div className="form-group">
             <div className="input-wrapper">
               <input
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 className={`auth-input ${error && confirmPassword ? "error" : ""}`}
                 placeholder="Confirmar nueva contraseña"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                onKeyDown={handleKeyDown}
+                onContextMenu={handleContextMenu}
                 disabled={loading}
                 autoComplete="new-password"
               />
               <i className="fas fa-lock input-icon"></i>
+              <button
+                type="button"
+                className="password-toggle-btn"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                disabled={loading}
+              >
+                <i className={showConfirmPassword ? "fas fa-eye-slash" : "fas fa-eye"}></i>
+              </button>
             </div>
+
+            {/* Indicador de coincidencia de contraseñas */}
+            {confirmPassword && (
+              <div className={`password-match ${passwordsMatch ? 'match' : 'no-match'}`}>
+                <i className={passwordsMatch ? "fas fa-check" : "fas fa-times"}></i>
+                <span>
+                  {passwordsMatch
+                    ? "Las contraseñas coinciden"
+                    : "Las contraseñas no coinciden"
+                  }
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Submit Button */}
           <button
             className="auth-button"
             onClick={handleResetPassword}
-            disabled={loading}
+            disabled={loading || !passwordsMatch}
             type="submit"
           >
-            {loading ? (
-              <>
-                <div className="loading-spinner"></div>
-                <span>Procesando...</span>
-              </>
-            ) : (
-              "Restablecer contraseña"
-            )}
+            Restablecer contraseña
           </button>
         </form>
       </div>
+
+      {/* Loading Modal */}
+      {loading && (
+        <div className={`loading-modal ${loading ? "visible" : ""}`}>
+          <div className="loading-content">
+            <div className="loading-spinner"></div>
+            <div className="loading-text">Procesando...</div>
+            <div className="loading-subtext">Restableciendo tu contraseña</div>
+          </div>
+        </div>
+      )}
 
       {/* Modal */}
       {showModal && (

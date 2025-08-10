@@ -85,17 +85,6 @@ const SlidingAuthForm: React.FC = () => {
                   <SocialContainer />
                   <span className="sub-text">o usa tu cuenta</span>
                   <input
-                    type="text"
-                    placeholder="Nombre de usuario"
-                    value={loginData.username}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setLoginData({ ...loginData, username: e.target.value })
-                    }
-                    required
-                    className="auth-input"
-                    disabled={isSubmitting}
-                  />
-                  <input
                     type="email"
                     placeholder="Correo electrónico"
                     value={loginData.email}

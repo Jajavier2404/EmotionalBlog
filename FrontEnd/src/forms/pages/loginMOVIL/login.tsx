@@ -106,21 +106,6 @@ const MobileAuthForm: React.FC = () => {
 
                   <div className="mobile-form-fields">
                     <input
-                      type="text"
-                      placeholder="Nombre de usuario"
-                      value={loginData.username}
-                      onChange={(e) =>
-                        setLoginData({
-                          ...loginData,
-                          username: e.target.value,
-                        })
-                      }
-                      required
-                      className="mobile-input"
-                      disabled={isSubmitting}
-                    />
-
-                    <input
                       type="email"
                       placeholder="Correo electrónico"
                       value={loginData.email}

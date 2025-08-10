@@ -5,18 +5,18 @@ import { registerUser, loginUser, forgotPassword } from "../api/authApi";
 
 const useAuthForm = () => {
   const navigate = useNavigate();
-
   const [isRightPanelActive, setIsRightPanelActive] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
 
-  const [loginData, setLoginData] = useState<AuthData>({
-    username: "",
+  // LoginData solo con email y password
+  const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
 
+  // RegisterData mantiene todos los campos
   const [registerData, setRegisterData] = useState<AuthData>({
     username: "",
     email: "",
@@ -93,7 +93,7 @@ const useAuthForm = () => {
   };
 
   const handleLogin = async () => {
-    if (!loginData.username || !loginData.email || !loginData.password) {
+    if (!loginData.email || !loginData.password) {
       showModal("Todos los campos son obligatorios", false);
       return;
     }
@@ -108,7 +108,7 @@ const useAuthForm = () => {
           hideModal();
           navigate("/");
         }, 1500);
-        setLoginData({ username: "", email: "", password: "" });
+        setLoginData({ email: "", password: "" });
       }
     } catch (error: any) {
       const message =
