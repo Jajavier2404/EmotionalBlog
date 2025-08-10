@@ -3,7 +3,10 @@ import axios from "axios";
 const API_URL = "http://localhost:3000/auth";
 
 export const registerUser = (data: any) => {
-  return axios.post(`${API_URL}/register`, data);
+  return axios.post(`${API_URL}/register`, data).catch((error) => {
+    console.error("Axios error:", error);
+    throw error;
+  });
 };
 
 export const loginUser = (data: { email: string; password: string }) => {

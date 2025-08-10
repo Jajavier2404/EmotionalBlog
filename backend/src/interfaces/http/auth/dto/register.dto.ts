@@ -1,3 +1,4 @@
+// src/interfaces/http/auth/dto/register.dto.ts
 import { z } from "zod";
 
 export const RegisterSchema = z.object({

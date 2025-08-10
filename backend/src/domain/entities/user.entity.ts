@@ -1,3 +1,4 @@
+// src/domain/entities/user.entity.ts
 export class User {
   id: string;
   name: string;

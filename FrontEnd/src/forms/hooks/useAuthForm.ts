@@ -74,6 +74,7 @@ const useAuthForm = () => {
 
     setIsSubmitting(true);
     try {
+      console.log("Calling registerUser with data:", registerData);
       await registerUser(registerData);
       showModal("Registro exitoso. ¡Ahora inicia sesión!", true);
       setTimeout(() => {
