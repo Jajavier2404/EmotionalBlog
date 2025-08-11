@@ -43,7 +43,7 @@ export class ForgotPasswordUseCase {
       <p style="font-size: 12px; color: #6b7280; text-align: center;">
         Este enlace expirará en <strong>15 minutos</strong>.
       </p>
-      <p style="font-size: 12px; color: #9ca3af; text-align: center;">© 2024 Emotional Blog. Todos los derechos reservados.</p>
+      <p style="font-size: 12px; color: #9ca3af; text-align: center;">© 2025 Emotional Blog. Todos los derechos reservados.</p>
     </div>
   </div>
 `,
