@@ -13,7 +13,7 @@ import { EntriesController } from '../../interfaces/http/entries/entries.control
 import { CreateEntryUseCase } from './create-entry.usecase';
 import { ListEntriesByUserUseCase } from './list-entries-by-user.usecase';
 import { UpdateEntryUseCase } from './update-entry.usecase';
-//import { DeleteEntryUseCase } from './delete-entry.usecase';
+import { DeleteEntryUseCase } from './delete-entry.usecase';
 import { PrismaEntryRepository } from '../../infrastructure/repositories/prisma-entry.repository';
 
 @Module({
@@ -24,7 +24,7 @@ import { PrismaEntryRepository } from '../../infrastructure/repositories/prisma-
     CreateEntryUseCase,
     ListEntriesByUserUseCase,
     UpdateEntryUseCase,
-    //DeleteEntryUseCase,
+    DeleteEntryUseCase,
     
     // Repositorio
     /**

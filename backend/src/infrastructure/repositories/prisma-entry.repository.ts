@@ -81,6 +81,8 @@ export class PrismaEntryRepository implements EntryRepository {
         );
     }
     async delete(id: string): Promise<void> {
-        throw new Error("Method not implemented.");
+        await this.prisma.entry.delete({
+            where: { id }
+        });
     }
 }

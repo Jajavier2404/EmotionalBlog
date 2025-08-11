@@ -14,12 +14,17 @@ import { UpdateEntryUseCase } from "src/application/entries/update-entry.usecase
 import type { UpdateEntryDto } from "./dto/update-entry.dto";
 import { UpdateEntryDtoSchema } from "./dto/update-entry.dto";
 
+// DELETE
+import { Delete } from "@nestjs/common";
+import { DeleteEntryUseCase } from "src/application/entries/delete-entry.usecase";
 @Controller('entries')
 export class EntriesController {
     constructor( 
         private readonly createEntryUseCase: CreateEntryUseCase ,
         private readonly listEntriesByUserUseCase: ListEntriesByUserUseCase,
-        private readonly updateEntryUseCase: UpdateEntryUseCase 
+        private readonly updateEntryUseCase: UpdateEntryUseCase,
+        private readonly deleteEntryUseCase: DeleteEntryUseCase,
+        
     ) {}
     
     // ---- RUTA POST PARA CREAR UNA ENTRADA ----
@@ -39,6 +44,7 @@ export class EntriesController {
             createEntryDto.texto,
             userId
         )
+        return entrada
     }
 
     // ---- RUTA GET PARA LISTAR ENTRADAS POR USUARIO ----
@@ -63,5 +69,14 @@ export class EntriesController {
             userId
         );
         return entradaActualizada;
+    }
+
+    // --- RUTA DELETE PARA ELIMIUNAR UN BLOG(ENTRADA) ---
+    @Delete(':id')
+    async remove(@Param('id') id:string, @Req() req: any){
+        const userId = 'test-user-123' // harcodeo user para pruebas req.user.id cuando esté JWT
+        await this.deleteEntryUseCase.execute(id,userId)
+
+        return {message:'Entrada eliminada correctamente B)'}
     }
 }
