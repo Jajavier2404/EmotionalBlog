@@ -5,7 +5,7 @@ import { Module, } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './infrastructure/database/prisma.module';
 import configuration from './config/configuration';
-// import { AuthModule } from './application/auth/auth.module';
+import { AuthModule } from './application/auth/auth.module';
 import { validationSchema } from './config/validation';
 import { EntriesModule } from './application/entries/entries.module';
 @Module({
@@ -23,7 +23,7 @@ import { EntriesModule } from './application/entries/entries.module';
       isGlobal: true,
     }),
     PrismaModule,
-    //AuthModule,
+    AuthModule,
     EntriesModule,
   ],
   controllers: [],

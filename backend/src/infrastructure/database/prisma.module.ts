@@ -15,4 +15,5 @@ import { PrismaService } from './prisma.service';
   providers: [PrismaService], // Proporciona el servicio PrismaService para que pueda ser inyectado en otros componentes.
   exports: [PrismaService], // Exporta PrismaService para que pueda ser utilizado en otros módulos.
 })
+
 export class PrismaModule {} // Exporta el módulo PrismaModule para que pueda ser importado en otros módulos de la aplicación.

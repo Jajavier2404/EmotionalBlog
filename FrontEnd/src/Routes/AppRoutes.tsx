@@ -1,12 +1,16 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "../Home/page/Home";
-import Login from "../Login/pages/Login";
-export default function AppRoutes() {
-    return (
-        <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/home" element={<Home />} />
+import Login from "../forms/pages/login";
+import NotFound from "../NotFound/page/notFound";
+import ForgotPassword from "../forms/pages/ForgotPassword";
 
-        </Routes>
-    )
+export default function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Home />} />
+      <Route path="*" element={<NotFound />} />
+      <Route path="/reset-password" element={<ForgotPassword />} />
+    </Routes>
+  );
 }
