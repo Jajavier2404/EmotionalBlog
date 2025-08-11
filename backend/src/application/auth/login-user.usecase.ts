@@ -25,6 +25,9 @@ export class LoginUserUseCase {
     const payload = { sub: user.id, email: user.email };
     const token = await this.jwtService.signAsync(payload);
 
+    console.log(`[${new Date().toISOString()}] Usuario autenticado: ${user.email}`);
+
+
     return {
       access_token: token,
       user: {

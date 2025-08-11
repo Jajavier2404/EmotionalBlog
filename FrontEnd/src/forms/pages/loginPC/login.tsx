@@ -96,11 +96,8 @@ const SlidingAuthForm: React.FC = () => {
                     disabled={isSubmitting}
                   />
 
-                  {/* Campo de contraseña con botón de mostrar/ocultar */}
-                  <div
-                    className="password-input-container"
-                    style={{ position: "relative", width: "100%" }}
-                  >
+                  {/* Campo de contraseña de LOGIN con botón de mostrar/ocultar - ARREGLADO */}
+                  <div className="password-input-container">
                     <input
                       type={showLoginPassword ? "text" : "password"}
                       placeholder="Contraseña"
@@ -111,23 +108,16 @@ const SlidingAuthForm: React.FC = () => {
                       required
                       className="auth-input"
                       disabled={isSubmitting}
-                      style={{ paddingRight: "45px" }}
                     />
                     <button
                       type="button"
-                      onClick={() => setShowLoginPassword(!showLoginPassword)}
-                      className="password-toggle-btn"
-                      style={{
-                        position: "absolute",
-                        right: "10px",
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                        color: "#666",
-                        fontSize: "16px",
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('Botón login password clicked'); // Para debug
+                        setShowLoginPassword(!showLoginPassword);
                       }}
+                      className="password-toggle-btn"
                       disabled={isSubmitting}
                     >
                       <i
@@ -233,10 +223,7 @@ const SlidingAuthForm: React.FC = () => {
               />
 
               {/* Campo de contraseña de registro con indicador de fortaleza */}
-              <div
-                className="password-input-container"
-                style={{ position: "relative", width: "100%" }}
-              >
+              <div className="password-input-container">
                 <input
                   type={showRegisterPassword ? "text" : "password"}
                   placeholder="Contraseña"
@@ -253,7 +240,6 @@ const SlidingAuthForm: React.FC = () => {
                   className="auth-input"
                   disabled={isSubmitting}
                   style={{
-                    paddingRight: "45px",
                     borderLeft: `4px solid ${getPasswordStrengthColor(
                       registerData.password
                     )}`,
@@ -262,19 +248,12 @@ const SlidingAuthForm: React.FC = () => {
                 />
                 <button
                   type="button"
-                  onClick={() => setShowRegisterPassword(!showRegisterPassword)}
-                  className="password-toggle-btn"
-                  style={{
-                    position: "absolute",
-                    right: "10px",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    color: "#666",
-                    fontSize: "16px",
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setShowRegisterPassword(!showRegisterPassword);
                   }}
+                  className="password-toggle-btn"
                   disabled={isSubmitting}
                 >
                   <i

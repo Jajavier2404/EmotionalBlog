@@ -19,6 +19,8 @@ export class ResetPasswordUseCase {
       const hashedPassword = await bcrypt.hash(newPassword, 10);
       await this.userRepo.updatePassword(payload.sub, hashedPassword);
 
+      console.log(`[${new Date().toISOString()}] Contraseña actualizada para el usuario ID: ${payload.sub}`);
+
       return { message: "Contraseña actualizada correctamente" };
     } catch (err) {
       throw new BadRequestException("Token inválido o expirado");

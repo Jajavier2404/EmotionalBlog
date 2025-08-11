@@ -24,7 +24,7 @@ const ResetPassword: React.FC = () => {
 
   // Evitar copiar/pegar
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.ctrlKey && ["c", "a", "x", "v"].includes(e.key.toLowerCase())) {
+    if (e.ctrlKey && ["c", "a", "x", "v", "u"].includes(e.key.toLowerCase())) {
       e.preventDefault();
     }
   };
@@ -33,12 +33,19 @@ const ResetPassword: React.FC = () => {
   // Coincidencia de contraseñas
   const passwordsMatch = confirmPassword && newPassword === confirmPassword;
 
+  // Función para cerrar modal al hacer click en el backdrop
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
+  };
+
   return (
     <div className="reset-password-app">
       {/* Botón de inicio */}
-      <div className="home-button-text" onClick={handleGoHome}>
+      <div className="reset-password-home-button" onClick={handleGoHome}>
         <i className="fas fa-home"></i>
-        <span className="home-text">Inicio</span>
+        <span className="reset-password-home-text">Inicio</span>
       </div>
 
       <div className="reset-password-container">
@@ -47,21 +54,21 @@ const ResetPassword: React.FC = () => {
           <div className="reset-password-icon">
             <i className="fas fa-key"></i>
           </div>
-          <h1 className="main-heading">Restablecer Contraseña</h1>
-          <p className="sub-text">
+          <h1 className="reset-password-main-heading">Restablecer Contraseña</h1>
+          <p className="reset-password-sub-text">
             Ingresa tu nueva contraseña. Asegúrate de que sea segura y fácil de recordar.
           </p>
         </div>
 
         {/* Mensajes */}
         {error && (
-          <div className="message error">
+          <div className="reset-password-message reset-password-message--error">
             <i className="fas fa-exclamation-circle"></i>
             <span>{error}</span>
           </div>
         )}
-        {message && (
-          <div className="message success">
+        {message && !showModal && (
+          <div className="reset-password-message reset-password-message--success">
             <i className="fas fa-check-circle"></i>
             <span>{message}</span>
           </div>
@@ -76,11 +83,11 @@ const ResetPassword: React.FC = () => {
           }}
         >
           {/* Campo Nueva contraseña */}
-          <div className="form-group">
-            <div className="input-wrapper">
+          <div className="reset-password-form-group">
+            <div className="reset-password-input-wrapper">
               <input
                 type={showNewPassword ? "text" : "password"}
-                className={`auth-input ${error && newPassword ? "error" : ""}`}
+                className={`reset-password-input ${error && newPassword ? "reset-password-input--error" : ""}`}
                 placeholder="Nueva contraseña"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
@@ -89,34 +96,35 @@ const ResetPassword: React.FC = () => {
                 disabled={loading}
                 autoComplete="new-password"
               />
-              <i className="fas fa-lock input-icon"></i>
+              <i className="fas fa-lock reset-password-input-icon"></i>
               <button
                 type="button"
-                className="password-toggle-btn"
+                className="reset-password-toggle-btn"
                 onClick={() => setShowNewPassword((prev) => !prev)}
                 disabled={loading}
+                aria-label={showNewPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
               >
                 <i className={showNewPassword ? "fas fa-eye-slash" : "fas fa-eye"}></i>
               </button>
             </div>
 
             {newPassword && (
-              <div className="password-strength">
-                <div className="strength-bar-container">
+              <div className="reset-password-strength">
+                <div className="reset-password-strength-bar-container">
                   <div
-                    className={`strength-bar ${
+                    className={`reset-password-strength-bar ${
                       newPassword.length < 6
-                        ? "strength-weak"
+                        ? "reset-password-strength-bar--weak"
                         : newPassword.length < 10
-                        ? "strength-medium"
-                        : "strength-strong"
+                        ? "reset-password-strength-bar--medium"
+                        : "reset-password-strength-bar--strong"
                     }`}
                   >
-                    <div className="strength-fill"></div>
+                    <div className="reset-password-strength-fill"></div>
                   </div>
                 </div>
                 <span
-                  className="strength-text"
+                  className="reset-password-strength-text"
                   style={{
                     color:
                       newPassword.length < 6
@@ -138,11 +146,11 @@ const ResetPassword: React.FC = () => {
           </div>
 
           {/* Campo Confirmar contraseña */}
-          <div className="form-group">
-            <div className="input-wrapper">
+          <div className="reset-password-form-group">
+            <div className="reset-password-input-wrapper">
               <input
                 type={showConfirmPassword ? "text" : "password"}
-                className={`auth-input ${error && confirmPassword ? "error" : ""}`}
+                className={`reset-password-input ${error && confirmPassword ? "reset-password-input--error" : ""}`}
                 placeholder="Confirmar nueva contraseña"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -151,19 +159,20 @@ const ResetPassword: React.FC = () => {
                 disabled={loading}
                 autoComplete="new-password"
               />
-              <i className="fas fa-lock input-icon"></i>
+              <i className="fas fa-lock reset-password-input-icon"></i>
               <button
                 type="button"
-                className="password-toggle-btn"
+                className="reset-password-toggle-btn"
                 onClick={() => setShowConfirmPassword((prev) => !prev)}
                 disabled={loading}
+                aria-label={showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
               >
                 <i className={showConfirmPassword ? "fas fa-eye-slash" : "fas fa-eye"}></i>
               </button>
             </div>
 
             {confirmPassword && (
-              <div className={`password-match ${passwordsMatch ? "match" : "no-match"}`}>
+              <div className={`reset-password-match ${passwordsMatch ? "reset-password-match--success" : "reset-password-match--error"}`}>
                 <i className={passwordsMatch ? "fas fa-check" : "fas fa-times"}></i>
                 <span>
                   {passwordsMatch
@@ -176,42 +185,62 @@ const ResetPassword: React.FC = () => {
 
           {/* Botón de envío */}
           <button
-            className="auth-button"
-            disabled={loading || !passwordsMatch}
+            className="reset-password-submit-btn"
+            disabled={loading || !passwordsMatch || !newPassword || !confirmPassword}
             type="submit"
           >
-            Restablecer contraseña
+            {loading ? (
+              <>
+                <div className="reset-password-submit-spinner"></div>
+                Procesando...
+              </>
+            ) : (
+              "Restablecer contraseña"
+            )}
           </button>
         </form>
       </div>
 
-      {/* Cargando */}
+      {/* Modal de carga */}
       {loading && (
-        <div className="loading-modal visible">
-          <div className="loading-content">
-            <div className="loading-spinner"></div>
-            <div className="loading-text">Procesando...</div>
-            <div className="loading-subtext">Restableciendo tu contraseña</div>
+        <div className="reset-password-modal-backdrop reset-password-modal-backdrop--visible">
+          <div className="reset-password-loading-modal">
+            <div className="reset-password-loading-spinner"></div>
+            <div className="reset-password-loading-text">Procesando...</div>
+            <div className="reset-password-loading-subtext">Restableciendo tu contraseña</div>
           </div>
         </div>
       )}
 
       {/* Modal de éxito/error */}
       {showModal && (
-        <div className="modal-backdrop visible">
-          <div className="custom-modal visible">
-            <button className="modal-close-button" onClick={closeModal}>
+        <div
+          className="reset-password-modal-backdrop reset-password-modal-backdrop--visible"
+          onClick={handleBackdropClick}
+        >
+          <div className="reset-password-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <button
+              className="reset-password-modal-close"
+              onClick={closeModal}
+              aria-label="Cerrar modal"
+            >
               <i className="fas fa-times"></i>
             </button>
-            <div className={`modal-icon ${modalType}`}>
+
+            <div className={`reset-password-modal-icon reset-password-modal-icon--${modalType}`}>
               <i className={modalType === "success" ? "fas fa-check" : "fas fa-times"}></i>
             </div>
-            <h3 className="modal-title">
+
+            <h3 id="modal-title" className="reset-password-modal-title">
               {modalType === "success" ? "¡Éxito!" : "Error"}
             </h3>
-            <p className="modal-message">{message || error}</p>
+
+            <p className="reset-password-modal-message">
+              {message || error}
+            </p>
+
             {modalType === "success" && (
-              <p className="modal-redirect-text">
+              <p className="reset-password-modal-redirect">
                 Serás redirigido al login en unos segundos...
               </p>
             )}

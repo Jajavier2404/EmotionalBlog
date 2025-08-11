@@ -103,6 +103,8 @@
   border: 1px solid rgba(139, 92, 246, 0.2);
 }
 
+
+
 /* Hover effect for the main container */
 .sliding-container:hover {
   box-shadow:
@@ -1276,4 +1278,68 @@
 .home-button-text:focus-visible {
   outline: 2px solid rgba(139, 92, 246, 0.6);
   outline-offset: 2px;
+}
+
+/* Agrega estos estilos al final de tu archivo login.css */
+
+/* Contenedor para el campo de contraseña */
+.password-input-container {
+  position: relative;
+  width: 100%;
+  display: block;
+}
+
+/* Botón de mostrar/ocultar contraseña */
+.password-toggle-btn {
+  position: absolute !important;
+  right: 15px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  color: #94a3b8 !important;
+  font-size: 16px !important;
+  z-index: 10 !important;
+  padding: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 30px !important;
+  height: 30px !important;
+  border-radius: 4px !important;
+  transition: all 0.3s ease !important;
+}
+
+.password-toggle-btn:hover {
+  color: #ffffff !important;
+  background: rgba(139, 92, 246, 0.1) !important;
+}
+
+.password-toggle-btn:focus {
+  outline: none !important;
+  color: #ffffff !important;
+}
+
+.password-toggle-btn:disabled {
+  cursor: not-allowed !important;
+  opacity: 0.5 !important;
+}
+
+/* Asegurar que el icono no interfiera con los clicks */
+.password-toggle-btn i {
+  pointer-events: none !important;
+  font-size: 14px !important;
+}
+
+/* Ajuste específico para el input de contraseña cuando tiene el botón */
+.password-input-container .auth-input {
+  padding-right: 50px !important;
+}
+
+/* Asegurar que el contenedor tenga la posición correcta */
+.sign-in-container .password-input-container,
+.sign-up-container .password-input-container {
+  position: relative !important;
+  width: 100% !important;
 }
