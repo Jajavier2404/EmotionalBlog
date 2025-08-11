@@ -15,6 +15,7 @@ export class PrismaEntryRepository implements EntryRepository {
     async create(entrada: Omit<Entry, "id" | "createdAt" | "updatedAt">): Promise<Entry> { // Crea una nueva entrada (Blog) en la base de datos
         const nuevaEntrada = await this.prisma.entry.create({
             data: {
+                title: entrada.title,
                 fecha: entrada.fecha,
                 emocion: entrada.emocion,
                 texto: entrada.texto,
@@ -24,6 +25,7 @@ export class PrismaEntryRepository implements EntryRepository {
         
         return new Entry(
             nuevaEntrada.id,
+            nuevaEntrada.title,
             nuevaEntrada.fecha,
             nuevaEntrada.emocion,
             nuevaEntrada.texto,
@@ -39,6 +41,7 @@ export class PrismaEntryRepository implements EntryRepository {
             });
         return entradas.map(entrada => new Entry(
             entrada.id,
+            entrada.title,
             entrada.fecha,
             entrada.emocion,
             entrada.texto,
@@ -57,6 +60,7 @@ export class PrismaEntryRepository implements EntryRepository {
 
         return new Entry(
             entrada.id,
+            entrada.title,
             entrada.fecha,
             entrada.emocion,
             entrada.texto,
@@ -72,6 +76,7 @@ export class PrismaEntryRepository implements EntryRepository {
         });
         return new Entry(
             entradaActualizada.id,
+            entradaActualizada.title,
             entradaActualizada.fecha,
             entradaActualizada.emocion,
             entradaActualizada.texto,

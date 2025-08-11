@@ -40,6 +40,7 @@ export class EntriesController {
         
 
         const entrada = await this.createEntryUseCase.execute(
+            createEntryDto.title,
             createEntryDto.emocion,
             createEntryDto.texto,
             userId

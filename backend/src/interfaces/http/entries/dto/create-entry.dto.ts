@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const CreateEntryDtoSchema = z.object({
+    title: z.string().min(1, "El título es requerido"),
     emocion: z.string().min(1, "La emoción es requerida"), // zod para validar que la emoción no esté vací (minimo 1 carácter si no bota "La emoción es requerida")
     texto: z.string().min(1, "El texto es requerido"), // zod para validar que el texto del blog no esté vacío (mínimo 1 carácter si no bota "El texto es requerido")
 })

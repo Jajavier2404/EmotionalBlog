@@ -11,6 +11,7 @@
 export class Entry {
   constructor(
     public readonly id:string,
+    public readonly title: string,
     public readonly fecha: Date,
     public readonly emocion: string,
     public readonly texto: string,

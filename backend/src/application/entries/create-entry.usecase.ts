@@ -12,9 +12,10 @@ export class CreateEntryUseCase {
     @Inject('EntryRepository') 
     private readonly entryRepository: EntryRepository) {}
 
-  async execute(emocion: string, texto: string, userId: string): Promise<Entry> {
+  async execute(title: string, emocion: string, texto: string, userId: string): Promise<Entry> {
     const nuevaEntrada = await this.entryRepository.create({
         fecha:new Date(),
+        title,
         emocion,
         texto,
         userId,

@@ -10,7 +10,7 @@
 
 import {Inject, Injectable, NotFoundException, ForbiddenException } from "@nestjs/common";
 import type { EntryRepository } from "src/domain/repositories/entry.repository";
-import { Entry } from "@prisma/client";
+import { Entry } from "src/domain/entities/entry.entity";
 
 @Injectable()
 export class UpdateEntryUseCase {
@@ -18,7 +18,7 @@ export class UpdateEntryUseCase {
         @Inject('EntryRepository')
         private readonly entryRepository: EntryRepository
     ) {}
-    async execute(id: string, datos: Partial<Pick<Entry, 'emocion' | 'texto'>>, userId:string): Promise<Entry>{
+    async execute(id: string, datos: Partial<Pick<Entry, 'title' | 'emocion' | 'texto'>>, userId:string): Promise<Entry>{
         const entrada = await this.entryRepository.findById(id);
         if (!entrada) {
             throw new NotFoundException(`Blog con ID ${id} no encontrado`);
