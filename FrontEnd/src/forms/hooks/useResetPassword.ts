@@ -18,6 +18,7 @@ export const useResetPassword = () => {
     setError(null);
     setMessage(null);
 
+    // Validaciones
     if (!newPassword || !confirmPassword) {
       setError("Por favor, completa todos los campos.");
       return;
@@ -37,7 +38,9 @@ export const useResetPassword = () => {
 
     try {
       setLoading(true);
+      // Llamada al API (token como query param)
       await resetPassword(token, newPassword);
+
       setModalType("success");
       setMessage("Contraseña restablecida con éxito.");
       setShowModal(true);

@@ -18,5 +18,6 @@ export const forgotPassword = (email: string) => {
 };
 
 export const resetPassword = (token: string, password: string) => {
-  return axios.post(`${API_URL}/reset-password`, { token, password });
+  return axios.put(`${API_URL}/reset-password?token=${token}`, { password });
 };
+
