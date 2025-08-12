@@ -355,7 +355,7 @@ const SlidingAuthForm: React.FC = () => {
         </div>
       </div>
 
-      <Modal modal={modal} hideModal={hideModal} />
+      {modal.isVisible && <Modal modal={modal} hideModal={hideModal} />}
     </div>
   );
 };

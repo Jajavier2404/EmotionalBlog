@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { AuthData, ModalState } from "../types/AuthData";
 import { registerUser, loginUser, forgotPassword } from "../api/authApi";
@@ -37,6 +37,16 @@ const useAuthForm = () => {
     setModal({ isVisible: false, message: "", isSuccess: false });
   };
 
+  // New useEffect to self-correct flickering empty modal
+  useEffect(() => {
+    if (modal.isVisible && modal.message === "") {
+      const timer = setTimeout(() => {
+        hideModal();
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [modal.isVisible, modal.message]);
+
   const handleForgotPassword = async () => {
     if (!forgotPasswordEmail) {
       showModal("Por favor ingresa tu correo electrónico", false);
@@ -45,9 +55,9 @@ const useAuthForm = () => {
 
     setIsSubmitting(true);
     try {
-      console.log("Datos enviados al endpoint", {
-        email: forgotPasswordEmail,
-      });
+      // console.log("Datos enviados al endpoint", {
+      //   email: forgotPasswordEmail,
+      // });
 
       await forgotPassword(forgotPasswordEmail);
       showModal(
@@ -80,7 +90,7 @@ const useAuthForm = () => {
       return;
     }
 
-    console.log("Datos enviados al endpoint /register:", registerData);
+    // console.log("Datos enviados al endpoint /register:", registerData);
 
     setIsSubmitting(true);
     try {
@@ -112,13 +122,13 @@ const useAuthForm = () => {
       return;
     }
 
-    console.log("Datos endpoint", loginData);
+    // console.log("Datos endpoint", loginData);
 
     setIsSubmitting(true);
     try {
       const { data } = await loginUser(loginData);
       if (data.access_token) {
-        console.log("JWT Token:", data.access_token); // <-- Aquí está el cambio
+        // console.log("JWT Token:", data.access_token); // <-- Aquí está el cambio
         localStorage.setItem("token", data.access_token);
         window.dispatchEvent(new Event("storage")); // Avisa que el storage cambió
         showModal("Inicio de sesión exitoso. Redirigiendo...", true);
@@ -161,4 +171,3 @@ const useAuthForm = () => {
 };
 
 export default useAuthForm;
- 
