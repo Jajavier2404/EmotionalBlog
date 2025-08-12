@@ -80,7 +80,7 @@ const useAuthForm = () => {
       return;
     }
 
-    console.log("📤 Datos enviados al endpoint /register:", registerData);
+    console.log("Datos enviados al endpoint /register:", registerData);
 
     setIsSubmitting(true);
     try {
@@ -118,7 +118,9 @@ const useAuthForm = () => {
     try {
       const { data } = await loginUser(loginData);
       if (data.access_token) {
+        console.log("JWT Token:", data.access_token); // <-- Aquí está el cambio
         localStorage.setItem("token", data.access_token);
+        window.dispatchEvent(new Event("storage")); // Avisa que el storage cambió
         showModal("Inicio de sesión exitoso. Redirigiendo...", true);
         setTimeout(() => {
           hideModal();
@@ -159,3 +161,4 @@ const useAuthForm = () => {
 };
 
 export default useAuthForm;
+ 

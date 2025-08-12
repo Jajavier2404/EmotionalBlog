@@ -1,23 +1,17 @@
-import { Controller, Post, Body, Req ,Patch,Param } from "@nestjs/common"; 
+import { Controller, Post, Body, Req ,Patch,Param, UseGuards, Get, Delete } from "@nestjs/common"; 
 import { CreateEntryUseCase } from "src/application/entries/create-entry.usecase";
 import type { CreateEntryDto } from "./dto/create-entry.dto";
 import { CreateEntryDtoSchema } from "./dto/create-entry.dto";
 import { ZodValidationPipe } from "src/infrastructure/pipes/zod-validation.pipe";
-
-// GET
-import { Get } from "@nestjs/common";
 import { ListEntriesByUserUseCase } from "src/application/entries/list-entries-by-user.usecase";
-//import { jwtAuthGuard } from "src/common/guards/jwt-auth.guard";
-
-// UPDATE
 import { UpdateEntryUseCase } from "src/application/entries/update-entry.usecase";
 import type { UpdateEntryDto } from "./dto/update-entry.dto";
 import { UpdateEntryDtoSchema } from "./dto/update-entry.dto";
-
-// DELETE
-import { Delete } from "@nestjs/common";
 import { DeleteEntryUseCase } from "src/application/entries/delete-entry.usecase";
+import { JwtAuthGuard } from "src/infrastructure/security/jwt.guard";
+
 @Controller('entries')
+@UseGuards(JwtAuthGuard)
 export class EntriesController {
     constructor( 
         private readonly createEntryUseCase: CreateEntryUseCase ,
@@ -29,14 +23,11 @@ export class EntriesController {
     
     // ---- RUTA POST PARA CREAR UNA ENTRADA ----
     @Post()
-    // @UseGuards(jwtAuthGuard)
-
-
     async create(
         @Body(new ZodValidationPipe(CreateEntryDtoSchema)) createEntryDto: CreateEntryDto,
         @Req() req: any
     ) {
-        const userId = "test-user-123"; // harcodeo user para pruebas req.user.id cuando esté JWT
+        const userId = req.user.userId;
         
 
         const entrada = await this.createEntryUseCase.execute(
@@ -51,7 +42,7 @@ export class EntriesController {
     // ---- RUTA GET PARA LISTAR ENTRADAS POR USUARIO ----
     @Get()
     async findAll(@Req() req: any) {
-        const userId = "test-user-123"; // harcodeo user para pruebas req.user.id cuando esté JWT        
+        const userId = req.user.userId;        
         const entradas = await this.listEntriesByUserUseCase.execute(userId);
         return entradas;
     }
@@ -63,8 +54,8 @@ export class EntriesController {
         @Body(new ZodValidationPipe(UpdateEntryDtoSchema)) updateEntryDto: UpdateEntryDto,
         @Req() req: any
     ){
-        const userId = "test-user-123"; // harcodeo user para pruebas req.user.id cuando esté JWT
-        const entradaActualizada = await this.updateEntryUseCase.execute( // Se guardan los cambios en la base de datos 
+        const userId = req.user.userId;
+        const entradaActualizada = await this.updateEntryUseCase.execute( 
             id,
             updateEntryDto,
             userId
@@ -75,7 +66,7 @@ export class EntriesController {
     // --- RUTA DELETE PARA ELIMIUNAR UN BLOG(ENTRADA) ---
     @Delete(':id')
     async remove(@Param('id') id:string, @Req() req: any){
-        const userId = 'test-user-123' // harcodeo user para pruebas req.user.id cuando esté JWT
+        const userId = req.user.userId;
         await this.deleteEntryUseCase.execute(id,userId)
 
         return {message:'Entrada eliminada correctamente B)'}
