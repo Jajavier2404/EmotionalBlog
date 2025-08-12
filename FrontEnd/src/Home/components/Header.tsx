@@ -59,8 +59,8 @@ const Header: React.FC<HeaderProps> = ({ menuActive, openMenu, closeMenu }) => {
 
       <div className={`part_2 menu_part ${menuActive ? "active" : ""}`}>
         <nav>
-          <li><a href="#">Quiénes somos</a></li>
-          <li><a href="#">Historias</a></li>
+          <li><Link to="/">Quiénes somos</Link></li>
+          <li>< Link to="/blog">Blog Personal</Link></li>
           {user ? (
             <li className="user-info">
               <span>{user.username}</span>

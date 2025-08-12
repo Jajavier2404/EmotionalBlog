@@ -2,34 +2,28 @@
 * {
   box-sizing: border-box;
 }
-
+:root{
+	--Dark-Violet: hsl(256, 32%, 28%);
+	--Grayish-Blue: hsl(216, 30%, 68%);
+}
 .blog-app {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--Dark-Violet);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-.blog-header {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  padding: 2rem 3rem;
-  margin: 2rem;
-  border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .header-content {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   max-width: 1200px;
-  margin: 0 auto;
-}
+  margin: 0 auto;}
 
 .logo-section {
   display: flex;
   align-items: center;
+  margin-left: 50px;
+  margin-left: 20px;
   gap: 1rem;
 }
 
@@ -39,6 +33,7 @@
   background: linear-gradient(135deg, #667eea, #764ba2);
   border-radius: 15px;
   display: flex;
+  margin-left: 20px;
   align-items: center;
   justify-content: center;
   color: white;
@@ -46,6 +41,7 @@
 
 .logo-text h1 {
   margin: 0;
+  margin-left: 50px;
   font-size: 1.8rem;
   font-weight: 700;
   color: #1a202c;
@@ -59,6 +55,7 @@
 
 .header-stats {
   display: flex;
+  margin-left: 500px;
   align-items: center;
 }
 
@@ -80,7 +77,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 3.5rem;
+  margin-top: 3.5rem;
 }
 
 .header-text h2 {
@@ -104,6 +102,7 @@
   font-weight: 600;
   cursor: pointer;
   display: flex;
+  margin-left: 600px;
   align-items: center;
   gap: 0.5rem;
   transition: all 0.3s ease;
@@ -134,15 +133,21 @@
 }
 
 .entries-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 1.5rem;
 }
+
+.entries-grid .entry-card {
+  flex: 1;
+  min-width: 300px; /* Ancho mínimo para cada tarjeta */
+  max-width: 350px;
+}
+
 
 .entry-card {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
-  border-radius: 20px;
   padding: 1.5rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
