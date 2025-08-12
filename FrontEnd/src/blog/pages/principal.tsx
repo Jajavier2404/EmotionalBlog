@@ -486,22 +486,6 @@ const EmotionalBlogApp: React.FC = () => {
         </div>
       )}
 
-      {/* Footer con información para desarrollo */}
-      <footer style={{ marginTop: '40px', padding: '20px', backgroundColor: '#e9ecef', borderRadius: '8px' }}>
-        <h3 style={{ color: '#495057', marginBottom: '15px' }}>🔧 Información para Conectar al Backend:</h3>
-        <div style={{ fontSize: '14px', color: '#6c757d' }}>
-          <p><strong>Base URL del Backend:</strong> http://localhost:3000</p>
-          <p><strong>Endpoints a conectar:</strong></p>
-          <ul style={{ marginLeft: '20px' }}>
-            <li><code>GET /entries</code> - Cargar todas las entradas</li>
-            <li><code>POST /entries</code> - Crear nueva entrada</li>
-            <li><code>PATCH /entries/:id</code> - Actualizar entrada</li>
-            <li><code>DELETE /entries/:id</code> - Eliminar entrada</li>
-          </ul>
-          <p><strong>📝 Los console.log te mostrarán los datos que debes enviar a cada endpoint.</strong></p>
-          <p><em>Revisa la consola del navegador (F12) para ver los datos cuando hagas clic en los botones.</em></p>
-        </div>
-      </footer>
     </div>
   );
 };

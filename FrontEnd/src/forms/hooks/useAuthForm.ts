@@ -124,7 +124,7 @@ const useAuthForm = () => {
         showModal("Inicio de sesión exitoso. Redirigiendo...", true);
         setTimeout(() => {
           hideModal();
-          navigate("/");
+          navigate("/blog");
         }, 1500);
         setLoginData({ email: "", password: "" });
       }
