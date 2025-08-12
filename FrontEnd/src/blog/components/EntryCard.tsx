@@ -1,23 +1,61 @@
 import React from 'react';
-import type { Entry } from '../types/Entry';
+import { Edit2, Trash2, Calendar } from 'lucide-react';
+
+interface Entry {
+  id: string;
+  title: string;
+  fecha: string;
+  emocion: string;
+  texto: string;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 interface EntryCardProps {
   entry: Entry;
-  onEdit: (entry: Entry) => void;
-  onDelete: (id: string) => void;
+  openEditModal: (entry: Entry) => void;
+  handleDelete: (id: string) => void;
+  getEmotionColor: (emotion: string) => string;
+  getEmotionEmoji: (emotion: string) => string;
+  formatDate: (date: string) => string;
 }
 
-const EntryCard: React.FC<EntryCardProps> = ({ entry, onEdit, onDelete }) => {
+const EntryCard: React.FC<EntryCardProps> = ({ entry, openEditModal, handleDelete, getEmotionColor, getEmotionEmoji, formatDate }) => {
   return (
     <div className="entry-card">
-      <h2>{entry.title}</h2>
-      <p><strong>Emoción:</strong> {entry.emocion}</p>
-      <p className="entry-card-text">{entry.texto}</p>
-      <div className="entry-card-footer">
-        <small>{new Date(entry.fecha).toLocaleDateString()}</small>
-        <div className="entry-card-actions">
-          <button onClick={() => onEdit(entry)} className="card-button edit">Editar</button>
-          <button onClick={() => onDelete(entry.id)} className="card-button delete">Eliminar</button>
+      <div className="card-header">
+        <div className="emotion-badge" style={{ backgroundColor: getEmotionColor(entry.emocion) }}>
+          <span className="emotion-emoji">{getEmotionEmoji(entry.emocion)}</span>
+          <span className="emotion-text">{entry.emocion}</span>
+        </div>
+        <div className="card-actions">
+          <button
+            className="action-btn edit-btn"
+            onClick={() => openEditModal(entry)}
+            title="Editar entrada"
+          >
+            <Edit2 size={16} />
+          </button>
+          <button
+            className="action-btn delete-btn"
+            onClick={() => handleDelete(entry.id)}
+            title="Eliminar entrada"
+          >
+            <Trash2 size={16} />
+          </button>
+        </div>
+      </div>
+
+      <div className="card-content">
+        <h3 className="entry-title">{entry.title}</h3>
+        <p className="entry-text">{entry.texto}</p>
+      </div>
+
+      <div className="card-footer">
+        <div className="entry-date">
+          <Calendar size={14} />
+          <span>{formatDate(entry.fecha)}</span>
         </div>
       </div>
     </div>
