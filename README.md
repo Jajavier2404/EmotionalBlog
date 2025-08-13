@@ -128,9 +128,9 @@ graph TD
     end
 
     subgraph Backend ["🚀 API del Backend"]
-        L[/auth/login]
-        M[/auth/register]
-        N[/entries]
+        L["auth/login"]
+        M["auth/register"]
+        N["entries"]
     end
 
     C --> G
